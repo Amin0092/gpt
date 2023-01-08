@@ -1,38 +1,14 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './searchblock.css';
 import { UserBlock } from './UserBlock';
+import { useContext } from 'react';
+import { userContext } from '../../context/userContext';
 
-
-interface ISearchBlockProps {
-  token: string;
-}
-
-interface IUserData {
-  name?: string;
-  iconImg?: string
-}
-
-export function SearchBlock({ token }: ISearchBlockProps) {
-  const [data, setData] = useState<IUserData>({})
-  useEffect(() => {
-    console.log(token);
-    
-      axios.get('https://oauth.reddit.com/api/v1/me', {
-        headers: { Authorization: `bearer ${token}` }
-      })
-      .then((resp) => {
-        const userData = resp.data
-        
-        setData({ name: userData.name, iconImg: userData.icon_img })
-        
-      })
-      .catch(console.log);
-    }, [token])
-    
+export function SearchBlock() {
+  const {iconImg, name} = useContext(userContext)
   return (
     <div className={styles.searchBlock}>
-      <UserBlock avatarSrc={data.iconImg} username={data.name} />
+      <UserBlock avatarSrc={iconImg} username={name} />
     </div>
   );
 }
