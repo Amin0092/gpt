@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './textcontent.css';
 
-export function TextContent() {
+
+
+export function TextContent(data : any) {
     return (
         <div className={styles.textContent}>
             <div className={styles.metaData}>

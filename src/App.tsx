@@ -9,23 +9,25 @@ import { Layout } from "./shared/Layout";
 import { tokenContext } from './shared/context/tokenContext';
 import { UserContextProvider } from './shared/context/userContext';
 import { usePostData } from './hooks/usePostData';
+import { PostContextProvider } from "./shared/context/postContext";
 
 
 function AppComponent() {
     const [token] = useToken();
     const [posts] = usePostData()
 
-    console.log(posts);
-    
+
     return (
         <tokenContext.Provider value={token}>
             <UserContextProvider>
-                <Layout>
-                    <Header />
-                    <Content>
-                        <CardsList />
-                    </Content>
-                </Layout>
+                <PostContextProvider>
+                    <Layout>
+                        <Header />
+                        <Content>
+                            <CardsList />
+                        </Content>
+                    </Layout>
+                </PostContextProvider>
             </UserContextProvider>
         </tokenContext.Provider>
     )
