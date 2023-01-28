@@ -7,17 +7,19 @@ import { postContext } from '../context/postContext';
 
 
 export function CardsList() {
-  const postData = useContext(postContext)[0]
+  const postData = useContext(postContext)
   console.log(postData);
-  
-    const CardItem = postData.map((item: object) => {
-      return (
-        <Card cardContent={item}/>
-      )
-    })
+
+  const CardItem = postData.map((item) => {
+    console.log(item);
+    
     return (
-      <ul className={styles.cardsList}>
-        <CardItem />
-      </ul>
-    );
+      <Card cardContent={item} />
+    )
+  })
+  return (
+    <ul className={styles.cardsList}>
+      {CardItem} 
+    </ul>
+  );
 }
