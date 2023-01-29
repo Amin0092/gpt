@@ -1,4 +1,5 @@
 {
+
   "homepage": "http://PikchaGameDev.github.io/react-deploy",
   "name": "reactapp",
   "version": "1.0.0",
@@ -52,4 +53,5 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-hot-middleware": "^2.25.0"
   }
+  
 }
