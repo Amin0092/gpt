@@ -22,8 +22,6 @@ interface ICardProps {
 
 export function Card({cardContent} :ICardProps ) {
   
-  console.log(cardContent?.sr_detail?.header_img);
-  
   return (
     <li className={styles.card} id={cardContent?.id}>
       <TextContent created={cardContent?.sr_detail?.created} author={cardContent?.author} title={cardContent?.title} author_icon={cardContent?.sr_detail?.header_img} />
