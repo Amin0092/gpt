@@ -1,13 +1,20 @@
 import React from 'react';
 import styles from './dropdown.css';
+import ReactDOM from "react-dom";
 
 interface IDropdownProps {
     button: React.ReactNode;
     children: React.ReactNode;
 }
+
 export function Dropdown({button, children}: IDropdownProps) {
+    let node = null
+    if (typeof document !== 'undefined') {
+        node = document.getElementById('dropdown')
+    }
+    if (!node) return null
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
-    return (
+    return ReactDOM.createPortal((
         <div className={styles.container}>
             <div className={styles.main}>
                 <div onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
@@ -15,7 +22,7 @@ export function Dropdown({button, children}: IDropdownProps) {
                 </div>
                 {isDropdownOpen && (
                     <div className={styles.listContainer}>
-                        <div onClick={() => console.log(children)} className={styles.list}>
+                        <div  className={styles.list}>
                             {children}
                             {<p className={styles.closeButton} onClick={() => setIsDropdownOpen(false)}>Закрыть</p>}
                         </div>
@@ -24,7 +31,8 @@ export function Dropdown({button, children}: IDropdownProps) {
                 )}
             </div>
         </div>
-    );
+    ), node);
+
 }
 
 

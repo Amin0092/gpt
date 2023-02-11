@@ -31,7 +31,6 @@ export function usePostData() {
                 })
                 .then((resp) => {
                     let postData = resp.data.data.children
-                    console.log(postData);
                     
                     postData = postData.map((item: any) =>
                         item = item.data  = {

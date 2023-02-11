@@ -1,12 +1,10 @@
 import React from 'react';
-import { CommentsIcon, HideIcon, SaveIcon, ShareIcon, WarningIcon } from '../../../../Icons';
+import {CommentsIcon, HideIcon, SaveIcon, ShareIcon, WarningIcon} from '../../../../Icons';
 import styles from './dropdownmenu.css';
 import {Text} from '../../../../Text'
-interface IDropdownMenu {
-  postId: string
-}
 
-export function DropdownMenu({ postId }: IDropdownMenu) {
+export function DropdownMenu() {
+
   return (
     <div className={styles.container}>
       <ul className={styles.listContainer}>
