@@ -20,7 +20,6 @@ interface ICardProps {
     }
 }
 
-<<<<<<< HEAD
 export function Card({cardContent}: ICardProps) {
     return (
         <li className={styles.card} id={cardContent?.id}>
@@ -28,20 +27,8 @@ export function Card({cardContent}: ICardProps) {
                          img={cardContent?.sr_detail?.banner_img} title={cardContent?.title}
                          author_icon={cardContent?.sr_detail?.header_img}/>
             <Preview img={cardContent?.sr_detail?.banner_img}/>
-            <Menu/>
+            <Menu />
             <Controls/>
         </li>
     )
-=======
-export function Card({cardContent} :ICardProps ) {
-  
-  return (
-    <li className={styles.card} id={cardContent?.id}>
-      <TextContent created={cardContent?.sr_detail?.created} author={cardContent?.author} title={cardContent?.title} author_icon={cardContent?.sr_detail?.header_img} />
-      <Preview img={cardContent?.sr_detail?.banner_img}/>
-      <Menu />
-      <Controls />
-    </li>
-  )
->>>>>>> 437d26db633f785405e308085638cd4a7f6f6ba5
 }

@@ -1,20 +1,28 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from './menu.css';
 import {Dropdown} from "../../../Dropdown";
 import {DropdownMenu} from "./DropdownMenu";
-import { MenuIcon } from '../../../Icons';
+import {MenuIcon} from '../../../Icons';
 
-export function Menu() {
-  return (
-    <div className={styles.menu}>
-        <Dropdown  button={<button className={styles.menuButton}>
-            <MenuIcon/>
-        </button>}>
-            <DropdownMenu />
-        </Dropdown>
+interface fff {
+    onClose?: () => void
+}
 
-    </div>
-  );
+export function Menu({onClose} : fff) {
+    const ref = useRef<HTMLDivElement>(null)
+    function handleClick() {
+        if (ref.current != null) console.log(ref.current.getBoundingClientRect())
+    }
+    return (
+        <div className={styles.menu} onClick={handleClick} ref={ref}>
+            <Dropdown button={<button className={styles.menuButton}>
+                <MenuIcon/>
+            </button>}>
+                <DropdownMenu/>
+            </Dropdown>
+
+        </div>
+    );
 }
 
 // export function Menu() {
