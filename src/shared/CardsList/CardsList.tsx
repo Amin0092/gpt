@@ -11,7 +11,7 @@ export function CardsList() {
 
   const CardItem = postData.map((item) => {
     return (
-      <Card cardContent={item} key={Math.random()}/>
+      <Card cardContent={item} />
     )
   })
   return (
