@@ -9,12 +9,9 @@ interface fff {
 }
 
 export function Menu({onClose} : fff) {
-    const ref = useRef<HTMLDivElement>(null)
-    function handleClick() {
-        if (ref.current != null) console.log(ref.current.getBoundingClientRect())
-    }
+
     return (
-        <div className={styles.menu} onClick={handleClick} ref={ref}>
+        <div className={styles.menu} >
             <Dropdown button={<button className={styles.menuButton}>
                 <MenuIcon/>
             </button>}>

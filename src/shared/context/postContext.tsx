@@ -1,7 +1,6 @@
 import React from 'react';
 import { usePostData } from '../../hooks/usePostData';
 
-type TPostContextData = object
 
 export const postContext = React.createContext<object[]>([])
 

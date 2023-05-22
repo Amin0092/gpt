@@ -11,12 +11,10 @@
     font-size: 12px;
     width: 140px;
     position: absolute;
-    right: 0;
-    top: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 3px;
     background-color: var(--white);
-    z-index: 2;
+    z-index: 3!important;
 }
 
 p.closeButton {
@@ -56,7 +54,7 @@ p.closeButton {
     .list{
         width: 160px;
         font-size: 15px;
-        padding-bottom: 5px;
+        background: none;
     }
     p.closeButton{
         display: none;

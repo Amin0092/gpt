@@ -1,6 +1,6 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import styles from './dropdown.css';
-import ReactDOM from "react-dom";
+import {positionContext} from "../context/positionContext";
 
 interface IDropdownProps {
     button: React.ReactNode;
@@ -8,12 +8,19 @@ interface IDropdownProps {
 }
 
 export function Dropdown({button, children}: IDropdownProps) {
-
+    const [position, setPosition] = useState({})
     const ref = useRef<HTMLDivElement>(null)
-    const secref = useRef<HTMLDivElement>(null)
+
     function HandleClick() {
-        if (ref.current != null) console.log(ref.current.getBoundingClientRect())
-        if (secref.current != null) console.log(secref.current.getBoundingClientRect())
+        if (ref.current != null) {
+            const DOMData = ref.current.getBoundingClientRect()
+            const positions = {
+                pTop: DOMData.top,
+                pLeft: DOMData.left
+            }
+            console.log(DOMData)
+            setPosition(positions)
+        }
     }
 
     let node = null
@@ -25,27 +32,30 @@ export function Dropdown({button, children}: IDropdownProps) {
 
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
 
-    return ReactDOM.createPortal((
-        <div className={styles.container} onClick={HandleClick}>
+    return (
+        <positionContext.Provider value={position}>
 
-            <div className={styles.main}>
+            <div className={styles.container} onClick={HandleClick}>
 
-                <div onClick={() => setIsDropdownOpen(!isDropdownOpen)} ref={ref}>
-                    {button}
-                </div>
+                <div className={styles.main}>
 
-                {isDropdownOpen && (
-                    <div className={styles.listContainer} ref={secref}>
-                        <div className={styles.list}>
-                            {children}
-                            {<p className={styles.closeButton} onClick={() => setIsDropdownOpen(false)}>Закрыть</p>}
-                        </div>
-                        {<div className={styles.bg} onClick={() => setIsDropdownOpen(false)}></div>}
+                    <div onClick={() => setIsDropdownOpen(!isDropdownOpen)} ref={ref}>
+                        {button}
                     </div>
-                )}
+
+                    {isDropdownOpen && (
+                        <div className={styles.listContainer}>
+                            <div className={styles.list}>
+                                {children}
+
+                            </div>
+                            {<div className={styles.bg} onClick={() => setIsDropdownOpen(false)}></div>}
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
-    ), node);
+        </positionContext.Provider>
+    );
 }
 
 
