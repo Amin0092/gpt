@@ -8,9 +8,10 @@ export function useCommentsData(postId: string) {
     const [commentsData, setCommentsData] = useState({})
     const token = useContext(tokenContext)
     useEffect(() => {
+        console.log(postId)
         if (!token && token !== 'undefined') {
             axios
-                .get(`http://api.reddit.com/r/subreddit/comments/${postId}`, {
+                .get(`https://oauth.reddit.com/comments/${postId}`, {
                     headers: {Authorization: `bearer ${token}`}
                 })
                 .then((resp) => {

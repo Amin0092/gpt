@@ -30,7 +30,8 @@ export function Post({title, img, id, onClose}: IPost) {
         [])
     let commentsData
     if (id && typeof id == "string")  commentsData = useCommentsData(id)
-    console.log(commentsData)
+
+
     const node = document.querySelector('#modal_root')
     if (!node) return null
     return ReactDOM.createPortal((
