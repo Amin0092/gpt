@@ -22,7 +22,6 @@ interface IPostData {
 export function usePostData() {
     const [postData, setPostData] = useState<object[]>([])
     const token = useContext(tokenContext)
-
     useEffect(() => {
         if (!token && token !== "undefined") {
             axios

@@ -4,8 +4,9 @@
     top: 10%;
     transform: translateX(-50%);
     z-index: 1000;
+    max-height: 80%;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     background: #FFFFFF;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     border-radius: 7px;
@@ -15,7 +16,10 @@
     padding: 24px;
     margin-bottom: 50px;
   }
-  
+.post ::-webkit-scrollbar-track{
+    display: block;
+    background: #000;
+}
   .content {
     overflow-y: auto;
   }

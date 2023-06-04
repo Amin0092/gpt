@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 30px;
+    padding: 0 20px;
+    font-family: 'Roboto', serif;
+}
+.userBlock {
+    display: flex;
+    grid-gap: 8px;
+    align-items: center;
+}
+.responseButton {
+    transition: .3s ease;
+}
+.responseButton:hover{
+    background: var(--greyEC);
+    padding: 7px 12px;
+    border-radius: 4px;
+}

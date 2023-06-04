@@ -10,7 +10,6 @@ interface IUserData {
 export function useUserData() {
     const [data, setData] = useState<IUserData>({})
     const token = useContext(tokenContext)
-
     useEffect(() => {
         if (token && token !== undefined) {
             axios
