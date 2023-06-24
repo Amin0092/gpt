@@ -1,12 +1,23 @@
-import  React, {ChangeEvent, FormEvent, useContext} from 'react';
+import React, {ChangeEvent, FormEvent, useContext, useState} from 'react';
 import styles from './commentsform.css';
 import {commentFormContext} from "../../context/commentFormContext";
 
+interface ICommentFormProps {
+    author?: string,
+}
 
-export function CommentsForm() {
+export function CommentsForm({author}: ICommentFormProps) {
     const {value, onChange} = useContext(commentFormContext)
-    function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-        onChange(event.target.value)
+    const [response, setResponse] = useState('')
+    let handleChange
+    if (author) {
+        handleChange = function (event : ChangeEvent<HTMLTextAreaElement>) {
+            setResponse(event.target.value)
+        }
+    } else {
+        handleChange = function (event: ChangeEvent<HTMLTextAreaElement>) {
+            onChange(event.target.value)
+        }
     }
 
     function handleSubmit(event: FormEvent) {

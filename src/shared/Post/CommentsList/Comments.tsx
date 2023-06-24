@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useContext, useEffect, useRef, useState} from 'react';
 import {useCommentsData} from "../../../hooks/useCommentsData";
 import {EColor, Text} from "../../Text";
 import {Break} from "../../Break";
 import styles from "./comments.css";
 import {CommentsForm} from "../CommentsForm";
+import {commentFormContext} from "../../context/commentFormContext";
 
 interface ICommentProps {
     data: {
@@ -15,11 +16,13 @@ interface ICommentProps {
 }
 
 function Comment({data}: ICommentProps) {
-    const ref = useRef<HTMLButtonElement>(null)
+    const {value, onChange} = useContext(commentFormContext)
+    const ref = useRef<HTMLDivElement>(null)
     let hideButton = 'Ответить'
     const [isResponseOpen, setIsResponseOpen] = useState(false)
 
-    if (isResponseOpen) hideButton = ''
+    if (isResponseOpen) hideButton = '';
+
     useEffect(() => {
             function handleClick(event: MouseEvent) {
                 if (event.target instanceof Node && !ref.current?.contains(event.target)) {
@@ -49,14 +52,16 @@ function Comment({data}: ICommentProps) {
             <Break size={4} top={true}/>
             <Text size={14}>{data.body}</Text>
             <Break size={8} top={true}/>
-            <button className={styles.responseButton} ref={ref} onClick={() => {
-                setIsResponseOpen(true)
-            }}><Text size={14} color={EColor.gray99}>{hideButton}</Text></button>
-            {isResponseOpen && (
-                <CommentsForm />
+            <div ref={ref}>
+                <button className={styles.responseButton} onClick={() => {
+                    setIsResponseOpen(true)
+                }}><Text size={14} color={EColor.gray99}>{hideButton}</Text></button>
+                {isResponseOpen && (
+                    <CommentsForm author={data.author} />
             )}
         </div>
-    )
+</div>
+)
 }
 
 interface ICommentsListProps {
@@ -86,8 +91,9 @@ export function Comments({id}: ICommentsListProps) {
             {CommentsList}
         </ul>
     )
-
 }
+
+
 
 
 
