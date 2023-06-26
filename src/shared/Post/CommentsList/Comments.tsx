@@ -5,6 +5,7 @@ import {Break} from "../../Break";
 import styles from "./comments.css";
 import {CommentsForm} from "../CommentsForm";
 import {commentFormContext} from "../../context/commentFormContext";
+import {ResponseForm, ResponseFormUncontrolled} from "../ResponseForm";
 
 interface ICommentProps {
     data: {
@@ -57,7 +58,8 @@ function Comment({data}: ICommentProps) {
                     setIsResponseOpen(true)
                 }}><Text size={14} color={EColor.gray99}>{hideButton}</Text></button>
                 {isResponseOpen && (
-                    <CommentsForm author={data.author} />
+                    <ResponseForm author={data.author}/>
+                    // <ResponseFormUncontrolled author={data.author}/>
             )}
         </div>
 </div>
