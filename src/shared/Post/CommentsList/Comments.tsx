@@ -1,11 +1,9 @@
-import React, {ChangeEvent, FormEvent, useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useCommentsData} from "../../../hooks/useCommentsData";
 import {EColor, Text} from "../../Text";
 import {Break} from "../../Break";
 import styles from "./comments.css";
-import {CommentsForm} from "../CommentsForm";
-import {commentFormContext} from "../../context/commentFormContext";
-import {ResponseForm, ResponseFormUncontrolled} from "../ResponseForm";
+import {ResponseForm} from "../ResponseForm";
 
 interface ICommentProps {
     data: {
@@ -17,7 +15,6 @@ interface ICommentProps {
 }
 
 function Comment({data}: ICommentProps) {
-    const {value, onChange} = useContext(commentFormContext)
     const ref = useRef<HTMLDivElement>(null)
     let hideButton = 'Ответить'
     const [isResponseOpen, setIsResponseOpen] = useState(false)

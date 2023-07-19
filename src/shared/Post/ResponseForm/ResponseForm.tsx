@@ -30,7 +30,6 @@ export function ResponseFormUncontrolled({author} : IResponseFormProps) {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault()
-        console.log(ref.current?.value)
     }
 
     return (

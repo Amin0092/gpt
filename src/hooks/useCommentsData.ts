@@ -1,10 +1,11 @@
-import {useContext, useEffect, useState} from "react";
-import {tokenContext} from "../shared/context/tokenContext";
+import { useEffect, useState} from "react";
 import axios from "axios";
+import {useSelector} from "react-redux";
+import {RootState} from "../store";
 
 export function useCommentsData(postId: string) {
     const [commentsData, setCommentsData] = useState([])
-    const token = useContext(tokenContext)
+    const token = useSelector<RootState, string>(state => state.token)
     useEffect(() => {
         if (token && token !== 'undefined') {
             axios
