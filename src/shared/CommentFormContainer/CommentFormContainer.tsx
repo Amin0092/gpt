@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {CommentsForm} from "../Post/CommentsForm";
-import {RootState, updateComment} from "../../store";
+import {RootState, updateComment} from "../../store/store";
 
 
 export function CommentsFormContainer() {

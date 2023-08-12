@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './layout.css';
-import {setToken} from "../../store";
+import {setToken} from "../../store/store";
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useState, useEffect} from 'react';
 import {useSelector} from "react-redux";
-import {RootState} from "../store";
+import {RootState} from "../store/store";
 
 export function usePostData() {
     const [postData, setPostData] = useState<object[]>([])
