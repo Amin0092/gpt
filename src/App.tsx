@@ -17,19 +17,13 @@ import thunk, {ThunkAction} from "redux-thunk";
 export const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ));
-export const timeout = (): ThunkAction<void, RootState, unknown, Action<string>> => (dispatch, getState) => {
-    dispatch({type: 'start'})
-    setTimeout(() => {
-        dispatch({type: 'finish'})
-    }, 3000)
-}
+
 
 function AppComponent() {
     useEffect(() => {
         const token = localStorage.getItem('token') || window.__token__
         store.dispatch(setToken(token))
         // @ts-ignore
-        store.dispatch(timeout())
         if (token) {
             localStorage.setItem('token', token)
         }

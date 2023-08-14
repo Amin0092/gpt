@@ -1,22 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './layout.css';
-import {setToken} from "../../store/store";
+import {setToken, useAppDispatch} from "../../store/store";
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 
 interface ILayoutProps {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-export function Layout({ children} : ILayoutProps) {
-  const [token] = useToken();
+export function Layout({children}: ILayoutProps) {
+    const [token] = useToken();
 
-  const dispatch = useDispatch()
-  dispatch(setToken(token) )
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(setToken(token))
+    }, [token])
 
-  return (
-    <div className={styles.layout}>
-      {children}
-    </div>
-  );
+    return (
+        <div className={styles.layout}>
+            {children}
+        </div>
+    );
 }
