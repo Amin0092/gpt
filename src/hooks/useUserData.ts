@@ -1,6 +1,6 @@
 import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState, useAppDispatch} from "../store/store";
+import {useSelector} from "react-redux";
+import {RootState, useAppDispatch} from "../store/store";
 import {meRequestAsync} from "../store/me/action";
 
 interface IUserData {
@@ -13,8 +13,9 @@ export function useUserData() {
     const token = useSelector<RootState, string>(state => state.token)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        if (!token && token == 'undefined') return;
-        dispatch(meRequestAsync())
+        if (token && token !== 'undefined') {
+            dispatch(meRequestAsync())
+        }
     }, [token])
 
     return [data]

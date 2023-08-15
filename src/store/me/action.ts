@@ -1,8 +1,7 @@
-import {Action, ActionCreator} from "redux";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {MyAction, RootState, useAppDispatch} from "../store";
-import axios from "axios/index";
-import {MeAction} from "./reducer";
+import {ActionCreator} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {MyAction, RootState} from "../store";
+import axios from "axios";
 
 export const ME_REQUEST = 'ME_REQUEST'
 export type MeRequestAction = {
@@ -39,12 +38,12 @@ export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: strin
 export const meRequestAsync = (): ThunkAction<void, RootState, unknown, MyAction> => (dispatch, getState) => {
         dispatch(meRequest())
         axios
-            .get('https://oauth.reddit.com/api/v1/me', {
+            .get('https://oauth.reddit.com/api/v1/me.json', {
                 headers: {Authorization: `bearer ${getState().token}`}
             })
             .then((resp) => {
                 const userData = resp.data
-                dispatch(meRequestSuccess({name: userData.name, iconImg: userData.icon_img}))
+                 dispatch(meRequestSuccess({name: userData.name, iconImg: userData.icon_img}))
             })
             .catch((error) => {
                 console.log(error)

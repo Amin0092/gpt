@@ -8,21 +8,22 @@ import {Layout} from "./shared/Layout";
 import {UserContextProvider} from './shared/context/userContext';
 import {PostContextProvider} from "./shared/context/postContext";
 import {Provider} from "react-redux";
-import {rootReducer, RootState, setToken} from "./store/store";
+import {MyAction, rootReducer, RootState, setToken} from "./store/store";
 import {Action, applyMiddleware, createStore, Middleware} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
-import thunk, {ThunkAction} from "redux-thunk";
+import thunk, {ThunkAction, ThunkMiddleware} from "redux-thunk";
+import {ThunkSaveToken} from "./hooks/useToken";
 
-
+const appThunk: ThunkMiddleware<RootState, MyAction> = thunk
 export const store = createStore(rootReducer, composeWithDevTools(
-    applyMiddleware(thunk)
+    applyMiddleware(appThunk)
 ));
 
 
 function AppComponent() {
     useEffect(() => {
         const token = localStorage.getItem('token') || window.__token__
-        store.dispatch(setToken(token))
+        store.dispatch(ThunkSaveToken())
         // @ts-ignore
         if (token) {
             localStorage.setItem('token', token)
