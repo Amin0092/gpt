@@ -19,9 +19,9 @@ export function CommentsFormContainer() {
 
     return (
        <CommentsForm
-        value={value}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+        // value={value}
+        // onChange={handleChange}
+        // onSubmit={handleSubmit}
        />
     )
 }
