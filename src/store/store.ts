@@ -10,6 +10,7 @@ import {
 import {meReducer, MeState} from "./me/reducer";
 import {store} from "../App";
 import {useDispatch} from "react-redux";
+import {act} from "react-dom/test-utils";
 
 export type RootState = {
     commentText: string
@@ -36,7 +37,7 @@ export const setToken: ActionCreator<SetTokenAction> = (token: string) => ({
     token,
 })
 const initialState: RootState = {
-    commentText: 'hello skillbox',
+    commentText: '',
     token: '',
     me: {
         loading: false,
@@ -50,11 +51,11 @@ export type MyAction = UpdateCommentAction
     | MeRequestSuccessAction
     | MeRequestErrorAction
 export const rootReducer: Reducer<RootState, MyAction> = (state = initialState, action) => {
-    switch (action.type) {
+ switch (action.type) {
         case UPDATE_COMMENT:
             return {
                 ...state,
-                commentText: action.text,
+                commentText: action.text
             };
         case SET_TOKEN:
             return {

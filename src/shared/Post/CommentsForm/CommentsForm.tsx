@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import styles from './commentsform.css';
 import {useSelector} from "react-redux";
 import {RootState, updateComment, useAppDispatch} from "../../../store/store";
-import {Formik, Form, Field, ErrorMessage, FormikHelpers} from 'formik';
+import {Formik, Form, Field, ErrorMessage, FormikHelpers, FormikErrors} from 'formik';
 import * as Yup from 'yup';
 
 interface FormValues {
@@ -10,30 +10,32 @@ interface FormValues {
 }
 
 
-//
-// const CommentSchema = Yup.object().shape({
-//     comment: Yup.string()
-//         .min(2, 'Минимум 2 символа')
-//         .max(500, 'Максимум 500 символов')
-//         .required('Обязательное поле'),
-// });
-
 export function CommentsForm() {
     const value = useSelector<RootState, string>(state => state.commentText);
     const dispatch = useAppDispatch();
-    //
+
     const handleSubmit = (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
-        console.log(values.comment);
         setSubmitting(false);
+        alert('Форма отправлена')
     };
-    function handleChange(event : ChangeEvent<HTMLTextAreaElement>) {
+
+    function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
         dispatch(updateComment(event.target.value))
+    }
+
+    function validateValue() {
+        const errors: FormikErrors<FormValues> = {};
+
+        if (value.length <= 3) {
+            errors.comment = 'Введите больше 3 символов'
+        }
+        return errors
     }
 
     return (
         <Formik
             initialValues={{comment: value}}
-            // validationSchema={CommentSchema}
+            validate={validateValue}
             onSubmit={handleSubmit}
         >
             {({isSubmitting}) => (
@@ -43,6 +45,7 @@ export function CommentsForm() {
                         component="textarea"
                         name="comment"
                         placeholder="Введите комментарий"
+                        value={value}
                         onChange={handleChange}
                     />
                     <ErrorMessage name="comment" component="div" className={styles.error}/>
@@ -55,3 +58,23 @@ export function CommentsForm() {
     );
 }
 
+// export function CommentsForm() {
+//     const value = useSelector<RootState, string>(state => state.commentText)
+//     const dispatch = useAppDispatch()
+//
+//     function handleSubmit(event: FormEvent) {
+//         event.preventDefault()
+//         console.log(value)
+//     }
+//
+//     function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+//         dispatch(updateComment(event.target.value))
+//     }
+//
+//     return (
+//         <form className={styles.form} onSubmit={handleSubmit}>
+//             <textarea className={styles.input} value={value} onChange={handleChange}/>
+//             <button type='submit' className={styles.button}>Комментировать</button>
+//         </form>
+//     )
+// }
