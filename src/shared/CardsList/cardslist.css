@@ -3,3 +3,23 @@
         padding: 40px 0;
     }
 }
+
+.loadMoreButton {
+    margin-top: 20px;
+    background: #CC6633;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    border: 1px solid #CC6633;
+    width: 200px ;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    transition: .3s ease;
+    cursor: pointer;
+}
+.loadMoreButton:hover {
+    background: #FFFFFF;
+    color: black;
+}

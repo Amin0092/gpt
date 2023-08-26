@@ -22,7 +22,7 @@ interface ICardProps {
 
 export function   Card({cardContent}: ICardProps) {
     return (
-        <li className={styles.card} id={cardContent?.id} key={cardContent?.id}>
+        <li className={styles.card} id={cardContent?.id}>
             <TextContent created={cardContent?.sr_detail?.created} id={cardContent?.id} author={cardContent?.author}
                          img={cardContent?.sr_detail?.banner_img} title={cardContent?.title}
                          author_icon={cardContent?.sr_detail?.header_img}/>
