@@ -49,7 +49,7 @@ export function CardsList() {
     };
 
     function handleLoad() {
-        loadMorePosts()
+        setAutoLoadCount(2)
     }
 
     useEffect(() => {
