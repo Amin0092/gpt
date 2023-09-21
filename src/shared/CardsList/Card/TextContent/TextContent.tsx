@@ -3,6 +3,7 @@ import styles from './textcontent.css';
 import {Text, EColor} from '../../../Text';
 import {useState} from 'react';
 import {Post} from '../../../Post';
+import {Link, useHistory} from "react-router-dom";
 
 interface ITextContentProps {
     author?: string,
@@ -13,9 +14,7 @@ interface ITextContentProps {
     id?: string
 }
 
-export function TextContent({id, author, created, author_icon, title, img}: ITextContentProps) {
-    const [isModalOpened, setIsModalOpened] = useState(false)
-
+export function TextContent({id, author, created, author_icon, title}: ITextContentProps) {
     return (
         <div className={styles.textContent}>
             <div className={styles.metaData}>
@@ -35,18 +34,11 @@ export function TextContent({id, author, created, author_icon, title, img}: ITex
                     <Text size={16}>{created || '4 часа назад'}</Text>
                 </span>
             </div>
-            <h2 className={styles.title} onClick={() => {
-                setIsModalOpened(true)
-            }}>
-                <a href="#post-url" className={styles.postLink}>
+            <h2 className={styles.title}>
+                <Link to={'/posts/' + id} className={styles.postLink}>
                     <Text size={16}>{title || `Следует отметить, что новая модель организационной деятельности Следует отметить, что новая модель
                     организационной деятельности`}</Text>
-                </a>
-                {isModalOpened && (
-                    <Post onClose={() => {
-                        setIsModalOpened(false)
-                    }} title={title} id={id} img={img}/>
-                )}
+                </Link>
             </h2>
         </div>
     );

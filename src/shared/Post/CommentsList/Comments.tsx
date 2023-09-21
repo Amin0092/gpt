@@ -57,10 +57,10 @@ function Comment({data}: ICommentProps) {
                 {isResponseOpen && (
                     <ResponseForm author={data.author}/>
                     // <ResponseFormUncontrolled author={data.author}/>
-            )}
+                )}
+            </div>
         </div>
-</div>
-)
+    )
 }
 
 interface ICommentsListProps {
@@ -82,7 +82,7 @@ export function Comments({id}: ICommentsListProps) {
     })
     const CommentsList = commentsData.map((item: any) => {
         return (
-            <Comment data={item}/>
+            <Comment key={item.id} data={item}/>
         )
     })
     return (

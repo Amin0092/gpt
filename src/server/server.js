@@ -8,13 +8,8 @@ import {useAppDispatch} from "../store/store";
 const app = express()
 app.use('/static', express.static('./dist/client'))
 
-app.get('/', (req, res) => {
-    res.send(
-        indexTemplate(ReactDOM.renderToString(App()))
-    )
-})
 app.get('/auth', (req, res) => {
-     axios.post(
+    axios.post(
         'https://www.reddit.com/api/v1/access_token',
         `grant_type=authorization_code&code=${req.query.code}&redirect_uri=http://localhost:3000/auth`,
         {
@@ -29,7 +24,11 @@ app.get('/auth', (req, res) => {
         })
         .catch(console.log)
 })
-
+app.get('*', (req, res) => {
+    res.send(
+        indexTemplate(ReactDOM.renderToString(App()))
+    )
+})
 app.listen(3000, () => {
     console.log('Server started on http://localhost:3000');
 })

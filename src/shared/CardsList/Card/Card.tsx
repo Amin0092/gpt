@@ -11,23 +11,24 @@ interface ICardProps {
         author?: string,
         id?: string,
         title?: string,
-        sr_detail?: {
-            banner_img?: string,
-            community_icon?: string,
-            header_img?: string,
-            created?: number
+        preview: {
+            images: [{
+                source: {
+                    url: string
+                }
+            }]
         }
     }
 }
 
-export function   Card({cardContent}: ICardProps) {
+export function Card({cardContent}: ICardProps) {
     return (
         <li className={styles.card} id={cardContent?.id}>
-            <TextContent created={cardContent?.sr_detail?.created} id={cardContent?.id} author={cardContent?.author}
-                         img={cardContent?.sr_detail?.banner_img} title={cardContent?.title}
-                         author_icon={cardContent?.sr_detail?.header_img}/>
-            <Preview img={cardContent?.sr_detail?.banner_img}/>
-            <Menu />
+            <TextContent id={cardContent?.id} author={cardContent?.author}
+                         title={cardContent?.title}
+            />
+            <Preview/>
+            <Menu/>
             <Controls/>
         </li>
     )

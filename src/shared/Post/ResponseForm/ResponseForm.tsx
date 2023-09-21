@@ -7,7 +7,6 @@ interface IResponseFormProps {
 
 export function ResponseForm({author}: IResponseFormProps) {
     const [responseValue, setResponseValue] = useState(author + ' ')
-    console.log(author)
 
     function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
         setResponseValue(event.target.value)

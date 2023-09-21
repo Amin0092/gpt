@@ -1,0 +1,14 @@
+/* Page404.css */
+.page_404 {
+    text_align: center;
+    margin_top: 20px;
+}
+
+.page_404 h1 {
+    font_size: 2rem;
+    color: #f00;
+}
+
+.page_404 p {
+    font_size: 1.2rem;
+}

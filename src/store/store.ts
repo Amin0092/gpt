@@ -10,12 +10,14 @@ import {
 import {meReducer, MeState} from "./me/reducer";
 import {store} from "../App";
 import {useDispatch} from "react-redux";
-import {act} from "react-dom/test-utils";
+import any = jasmine.any;
 
 export type RootState = {
     commentText: string
     token: string
     me: MeState
+    posts: any[]
+
 }
 const UPDATE_COMMENT = 'UPDATE_COMMENT'
 type UpdateCommentAction = {
@@ -36,6 +38,17 @@ export const setToken: ActionCreator<SetTokenAction> = (token: string) => ({
     type: SET_TOKEN,
     token,
 })
+
+const SET_POSTS = 'SET_POSTS'
+type setPostsAction = {
+    type: typeof SET_POSTS,
+    posts: any[]
+}
+export const setPosts: ActionCreator<setPostsAction> = (posts : []) => ({
+    type: SET_POSTS,
+    posts
+})
+
 const initialState: RootState = {
     commentText: '',
     token: '',
@@ -43,15 +56,17 @@ const initialState: RootState = {
         loading: false,
         error: '',
         data: {}
-    }
+    },
+    posts: []
 }
 export type MyAction = UpdateCommentAction
     | SetTokenAction
     | MeRequestAction
     | MeRequestSuccessAction
     | MeRequestErrorAction
+    | setPostsAction
 export const rootReducer: Reducer<RootState, MyAction> = (state = initialState, action) => {
- switch (action.type) {
+    switch (action.type) {
         case UPDATE_COMMENT:
             return {
                 ...state,
@@ -68,6 +83,12 @@ export const rootReducer: Reducer<RootState, MyAction> = (state = initialState, 
             return {
                 ...state,
                 me: meReducer(state.me, action)
+            }
+
+        case SET_POSTS:
+            return {
+                ...state,
+                posts: action.posts
             }
 
         default:

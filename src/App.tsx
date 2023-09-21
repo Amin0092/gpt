@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {hot} from "react-hot-loader/root";
 import './main.global.css';
 import {CardsList} from "./shared/CardsList";
@@ -6,13 +6,17 @@ import {Content} from "./shared/Content";
 import {Header} from "./shared/Header";
 import {Layout} from "./shared/Layout";
 import {UserContextProvider} from './shared/context/userContext';
-import {PostContextProvider} from "./shared/context/postContext";
+
 import {Provider} from "react-redux";
-import {MyAction, rootReducer, RootState, setToken} from "./store/store";
-import {Action, applyMiddleware, createStore, Middleware} from "redux";
+import {MyAction, rootReducer, RootState} from "./store/store";
+import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
-import thunk, {ThunkAction, ThunkMiddleware} from "redux-thunk";
+import thunk, {ThunkMiddleware} from "redux-thunk";
 import {ThunkSaveToken} from "./hooks/useToken";
+import {BrowserRouter, Redirect, Route, Switch,} from 'react-router-dom'
+import {Post} from "./shared/Post";
+import {Page404} from "./shared/Page404";
+
 
 const appThunk: ThunkMiddleware<RootState, MyAction> = thunk
 export const store = createStore(rootReducer, composeWithDevTools(
@@ -21,6 +25,13 @@ export const store = createStore(rootReducer, composeWithDevTools(
 
 
 function AppComponent() {
+
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    })
+
     useEffect(() => {
         const token = localStorage.getItem('token') || window.__token__
         store.dispatch(ThunkSaveToken())
@@ -29,22 +40,40 @@ function AppComponent() {
             localStorage.setItem('token', token)
         }
     }, [])
+
+
     return (
         <Provider store={store}>
-            <UserContextProvider>
-                <PostContextProvider>
-                    <Layout>
-                        <Header/>
-                        <Content>
-                            <CardsList/>
-                        </Content>
-                    </Layout>
-                </PostContextProvider>
-            </UserContextProvider>
+            {isMounted && (
+                <BrowserRouter>
+                    <UserContextProvider>
+                        <Switch>
+                            <Layout>
+                                <Header/>
+                                <Route exact={true} path="/posts">
+                                    <Content>
+                                        <CardsList/>
+                                    </Content>
+                                </Route>
+                                <Route path="/posts/:id">
+                                    <Post/>
+                                </Route>
+                                <Redirect from='auth' to='posts'/>
+                                <Route path='*'>
+                                    <Page404/>
+                                </Route>
+                                <Redirect from='/' to='/posts'/>
+                            </Layout>
+                        </Switch>
+                    </UserContextProvider>
+                </BrowserRouter>
+            )}
         </Provider>
     )
 }
 
-export const App = hot(() => <AppComponent/>)
+export const App = hot(() =>
+    <AppComponent/>
+)
 
 

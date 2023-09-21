@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Card} from './Card';
 import styles from './cardslist.css';
 import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
+import {RootState, setPosts, useAppDispatch} from "../../store/store";
 import axios from "axios";
 
 async function loadPosts(token: string, nextAfter: string) {
@@ -24,13 +24,14 @@ async function loadPosts(token: string, nextAfter: string) {
 export function CardsList() {
     const token = useSelector<RootState, string>(state => state.token);
 
-    const [posts, setPosts] = useState<any[]>([]);
+    const posts = useSelector<RootState, any[]>(state => state.posts)
     const [nextAfter, setNextAfter] = useState('')
-    const [loading, setLoading] = useState(false);
     const [errorLoading, setErrorLoading] = useState('');
     const [autoLoadCount, setAutoLoadCount] = useState(2);
+    const [loading, setLoading] = useState(false);
 
     const bottomOfList = useRef<HTMLDivElement>(null)
+    const dispatch = useAppDispatch()
 
     const loadMorePosts = () => {
         if (token && token !== "undefined" && !loading) {
@@ -38,7 +39,8 @@ export function CardsList() {
             loadPosts(token, nextAfter)
                 .then(([after, children]) => {
                     setNextAfter(after);
-                    setPosts(prevChildren => prevChildren.concat(...children));
+                    // setPosts(prevChildren => prevChildren.concat(...children));
+                    dispatch(setPosts(posts.concat(...children)))
                 })
                 .catch(error => {
                     setErrorLoading(String(error));
@@ -60,10 +62,8 @@ export function CardsList() {
     useEffect(() => {
         if (!loading && token && token !== 'undefined') {
             if (autoLoadCount > 0) {
-                console.log(1)
                 const observer = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting) {
-                        console.log('load')
                         loadMorePosts();
                         setAutoLoadCount(prevCount => prevCount - 1);
                     }
@@ -84,6 +84,7 @@ export function CardsList() {
         }
     }, [autoLoadCount, loading, token]);
 
+
     return (
         <ul className={styles.cardsList}>
 
@@ -91,9 +92,9 @@ export function CardsList() {
                 <div style={{textAlign: "center"}}> Нет ни одного поста </div>
             )}
 
-            {posts.map(post => (
+            {posts.length != 0 && (posts.map(post => (
                 <Card key={post.data.id} cardContent={post.data}/>
-            ))}
+            )))}
 
             <div onClick={handleLoad} role='button' aria-disabled={loading} ref={bottomOfList}
                  className={styles.loadMoreButton}>
@@ -105,7 +106,6 @@ export function CardsList() {
                     {errorLoading}
                 </div>
             )}
-
         </ul>
     );
 }
