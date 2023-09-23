@@ -50,16 +50,19 @@ function AppComponent() {
                         <Switch>
                             <Layout>
                                 <Header/>
-                                <Route exact={true} path="/posts">
+                                <Route path="/posts">
+                                    {console.log('posts')}
                                     <Content>
                                         <CardsList/>
                                     </Content>
                                 </Route>
                                 <Route path="/posts/:id">
+                                    {console.log('id')}
                                     <Post/>
                                 </Route>
                                 <Redirect from='auth' to='posts'/>
                                 <Route path='*'>
+                                    {console.log('no matches')}
                                     <Page404/>
                                 </Route>
                                 <Redirect from='/' to='/posts'/>
